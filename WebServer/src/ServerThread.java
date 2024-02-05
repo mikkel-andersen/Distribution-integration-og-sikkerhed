@@ -100,6 +100,8 @@ public class ServerThread extends Thread{
 			return ("Content-Type: text/javascript\n");
 		} else if (docuname.endsWith(".css")) {
 			return ("Content-Type: text/css\n");
+		} else if (docuname.endsWith(".jpeg")) {
+			return ("Content-Type: text/jpeg\n");
 		} else {
 			return ("Content-Type: text/plain\n");
 		}
