@@ -35,4 +35,17 @@ public class TCPClient {
 			}
 		}
 	}
+
+	public void listenForMessage() {
+		new Thread(() -> {
+			try {
+				while(true) {
+					String message = inFromServer.readLine();
+					System.out.println("FROM SERVER: " + message);
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}).start();
+	}
 }
