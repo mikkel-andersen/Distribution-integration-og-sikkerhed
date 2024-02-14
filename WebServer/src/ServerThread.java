@@ -17,15 +17,21 @@ public class ServerThread extends Thread{
 			String clientSentence = inFromClient.readLine();
 
 			System.out.println("Received: " + clientSentence);
-			String[] a = clientSentence.split(" ");
-			String filename = "/Users/mikkel/Documents/Datamatiker/3. semester/DIS/WebServer/" + a[1];
-			System.out.println("Filename: " + filename);
-			byte[] file = read(filename);
-			outToClient.writeBytes("HTTP/1.1 200 OK\n");
-			outToClient.writeBytes(ContentType(filename));
-			outToClient.writeBytes("Content-Length: " + file.length + "\n");
-			outToClient.writeBytes("\n");
-			outToClient.write(file);
+
+			String[] a = null;
+			if (clientSentence != null) {
+				a = clientSentence.split("\\s+");
+			}
+
+			if (a != null && !a[1].endsWith(".ico")) {
+				outToClient.writeBytes("HTTP/1.1 200 OK\n"); // status line
+				outToClient.writeBytes(ContentType(a[1])); // header line
+				outToClient.writeBytes("Connection: close\n"); // header line
+				outToClient.writeBytes("\n"); // blank line
+
+				byte[] file = read("/Users/mikkel/Documents/Datamatiker/3. semester/DIS/WebServer" + a[1]);
+				outToClient.write(file); // body
+			}
 
 		} catch (IOException e) {
 			e.printStackTrace();

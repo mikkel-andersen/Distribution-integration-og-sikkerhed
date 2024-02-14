@@ -3,7 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Opgaver til DIS.iml" filepath="$PROJECT_DIR$/Opgaver til DIS.iml" />
+      <module fileurl="file://$PROJECT_DIR$/UDP/UDP.iml" filepath="$PROJECT_DIR$/UDP/UDP.iml" />
       <module fileurl="file://$PROJECT_DIR$/WebServer/WebServer.iml" filepath="$PROJECT_DIR$/WebServer/WebServer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Workshop I SocketProgrammering/Workshop I SocketProgrammering.iml" filepath="$PROJECT_DIR$/Workshop I SocketProgrammering/Workshop I SocketProgrammering.iml" />
     </modules>
   </component>
 </project>
