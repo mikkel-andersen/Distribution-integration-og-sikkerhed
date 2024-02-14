@@ -18,11 +18,21 @@ public class TCPServer {
         BufferedReader inFromClient = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
         DataOutputStream outToClient = new DataOutputStream(connectionSocket.getOutputStream());
         System.out.println("Klient forbundet til Server");
-        clientSentence = inFromClient.readLine();
-        System.out.println(clientSentence);
-        BufferedReader fromServer = new BufferedReader(new InputStreamReader(System.in));
-        capitalizedSentence = fromServer.readLine();
-        outToClient.writeBytes(capitalizedSentence);
+        while (!connectionSocket.isClosed()) {
+            clientSentence = inFromClient.readLine();
+            if (!clientSentence.equals("stop")) {
+                System.out.println(clientSentence);
+                BufferedReader fromServer = new BufferedReader(new InputStreamReader(System.in));
+                System.out.println("Indtast et ord - eller 'stop' for at afslutte:");
+                capitalizedSentence = fromServer.readLine() + '\n';
+                outToClient.writeBytes(capitalizedSentence);
+            } else {
+                System.out.println("Klienten har afsluttet forbindelsen");
+                connectionSocket.close();
+                welcomeSocket.close();
+            }
+        }
+
 
     }
 }
