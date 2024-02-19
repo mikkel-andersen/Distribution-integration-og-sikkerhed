@@ -9,10 +9,13 @@ import java.sql.SQLOutput;
 
 public class TCPClient {
 
-	public static void main(String[] args) throws Exception, IOException {
-		
+	public static void main(String[] args) throws Exception {
+		TCPClient client = new TCPClient();
+		client.startClient();
+	}
+
+	public void startClient() throws IOException {
 		String sentence;
-		String modifiedSentence;
 
 		BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in));
 
@@ -20,32 +23,22 @@ public class TCPClient {
 		DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());
 		BufferedReader inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
-
-		while (!clientSocket.isClosed()) {
-			System.out.println("Indtast et ord - eller 'stop' for at afslutte:");
-			sentence = inFromUser.readLine();
-			outToServer.writeBytes(sentence + '\n');
-			modifiedSentence = inFromServer.readLine();
-
-			if (!modifiedSentence.equals("stop")) {
-			System.out.println(modifiedSentence);
-		} else {
-				System.out.println("Forbindelsen er afsluttet");
-				clientSocket.close();
-			}
-		}
-	}
-
-	public void listenForMessage() {
+		// Start a new thread to listen for messages from the server
 		new Thread(() -> {
 			try {
-				while(true) {
-					String message = inFromServer.readLine();
-					System.out.println("FROM SERVER: " + message);
+				String modifiedSentence;
+				while ((modifiedSentence = inFromServer.readLine()) != null) {
+					System.out.println(modifiedSentence);
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}).start();
+
+		while (!clientSocket.isClosed()) {
+			System.out.println("Indtast et ord - eller 'stop' for at afslutte:");
+			sentence = inFromUser.readLine();
+			outToServer.writeBytes(sentence + '\n');
+		}
 	}
 }
