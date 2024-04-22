@@ -2,25 +2,43 @@ import java.io.*;
 import java.net.*;
 
 class UDPClient {
+	static DatagramSocket clientSocket;
 	public static void main(String args[]) throws Exception {
+//		BufferedReader inFromUser = new BufferedReader(new InputStreamReader(
+//				System.in));
+		clientSocket = new DatagramSocket();
+		clientSocket.setBroadcast(true);
+		udsendBroadcoast("Hallooo, hvor er I?");
+
+	}
+
+	public static void udsendBroadcoast(String s) throws IOException {
+		InetAddress broadcastAddress = InetAddress.getByName("255.255.255.255");
+
 		BufferedReader inFromUser = new BufferedReader(new InputStreamReader(
 				System.in));
-		DatagramSocket clientSocket = new DatagramSocket();
-		clientSocket.setBroadcast(true); // Enable broadcast
 		byte[] sendData = new byte[1024];
 		byte[] receiveData = new byte[1024];
-		String sentence = inFromUser.readLine();
+		String sentence = s;
 		sendData = sentence.getBytes();
-		InetAddress broadcastAddress = InetAddress.getByName("255.255.255.255"); // Broadcast address
 		DatagramPacket sendPacket = new DatagramPacket(sendData,
-				sendData.length, broadcastAddress, 9876); // Send to broadcast address
+				sendData.length, broadcastAddress, 5959);
 		clientSocket.send(sendPacket);
-		DatagramPacket receivePacket = new DatagramPacket(receiveData,
-				receiveData.length);
-		clientSocket.receive(receivePacket);
+		boolean modtaget = false;
+		int numberTries = 0;
+		clientSocket.setSoTimeout(3000);
+		while (!modtaget && numberTries < 3) {
+			DatagramPacket receivePacket = new DatagramPacket(receiveData,
+					receiveData.length);
+			try {
+				clientSocket.receive(receivePacket);
+				InetAddress IPAdressOther = receivePacket.getAddress();
+				System.out.println("Modtaget: " + IPAdressOther.toString());
 
-		String modifiedSentence = new String(receivePacket.getData());
-		System.out.println("FROM SERVER:" + modifiedSentence);
-		clientSocket.close();
+			} catch (SocketTimeoutException e){
+				numberTries++;
+			}
+
+		}
 	}
 }

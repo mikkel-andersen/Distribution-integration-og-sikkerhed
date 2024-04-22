@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/Lektion 15 - MQTT/BankTransaktioner/BankTransaktioner.iml" filepath="$PROJECT_DIR$/Lektion 15 - MQTT/BankTransaktioner/BankTransaktioner.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Lektion 15 - MQTT/Lektion 16 - MQTT.iml" filepath="$PROJECT_DIR$/Lektion 15 - MQTT/Lektion 16 - MQTT.iml" />
       <module fileurl="file://$PROJECT_DIR$/Lektion 4 - Broadcast/Lektion 4 - Broadcast.iml" filepath="$PROJECT_DIR$/Lektion 4 - Broadcast/Lektion 4 - Broadcast.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Lektion13 - WireShark/Lektion13 - WireShark.iml" filepath="$PROJECT_DIR$/Lektion13 - WireShark/Lektion13 - WireShark.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Lektion18 - Transaktioner/Lektion18 - Transaktioner.iml" filepath="$PROJECT_DIR$/Lektion18 - Transaktioner/Lektion18 - Transaktioner.iml" />
       <module fileurl="file://$PROJECT_DIR$/Opgaver til DIS.iml" filepath="$PROJECT_DIR$/Opgaver til DIS.iml" />
       <module fileurl="file://$PROJECT_DIR$/UDP/UDP.iml" filepath="$PROJECT_DIR$/UDP/UDP.iml" />
       <module fileurl="file://$PROJECT_DIR$/WebServer/WebServer.iml" filepath="$PROJECT_DIR$/WebServer/WebServer.iml" />

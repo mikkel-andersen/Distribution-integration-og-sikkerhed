@@ -8,35 +8,33 @@ class UDPServer {
     private DatagramSocket broadcastSocket;
     private DatagramSocket svarSocket;
 
-	public static void main(String[] args) throws SocketException {
+	public static void main(String[] args) throws Exception {
 		UDPServer server = new UDPServer();
 	}
 
-    public UDPServer() throws SocketException {
-        this.broadcastSocket = new DatagramSocket(1234);
+    public UDPServer() throws Exception {
+        this.broadcastSocket = new DatagramSocket(5959);
         this.svarSocket = new DatagramSocket();
-
 		lytEfterBroadcast();
     }
 
-    public void lytEfterBroadcast() {
-        new Thread(() -> {
+    public void lytEfterBroadcast() throws Exception {
             byte[] receiveData = new byte[1024];
             byte[] sendData = new byte[1024];
-            while (true) {
+            boolean modtaget = false;
+            while (!modtaget) {
                 DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
-                try {
-                    broadcastSocket.receive(receivePacket);
-                    String sentence = new String(receivePacket.getData());
-                    InetAddress IPAddress = receivePacket.getAddress();
-                    int port = receivePacket.getPort();
-                    sendData = sentence.getBytes();
-                    DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, port);
-                    svarSocket.send(sendPacket);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                broadcastSocket.receive(receivePacket);
+                String sentence = new String(receivePacket.getData());
+                System.out.println(sentence);
+                InetAddress IPAddress = receivePacket.getAddress();
+                int port = receivePacket.getPort();
+                sendData = sentence.getBytes();
+                DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, port);
+                svarSocket.send(sendPacket);
+                modtaget = true;
             }
-        }).start();
+            svarSocket.close();
+            }
     }
-}
+
